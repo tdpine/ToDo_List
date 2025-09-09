@@ -81,9 +81,20 @@ class SomedayDeadline extends Deadline {
 
 class AnytimeDeadline extends Deadline {
     checkDeadline(deadLine) {
-       
+        if (deadLine == ""){
+            return true;
+        }
         return false;
+        
     }
 }
 
 
+module.exports = {
+    createToDo,
+    toDoUpdater,
+    TodayDeadline,
+    UpcomingDeadline,
+    SomedayDeadline,
+    AnytimeDeadline
+}
