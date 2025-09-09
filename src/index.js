@@ -38,6 +38,7 @@ class Deadline {
         //-1 stands for the 'anytime' category
         this.periodBefore = periodBefore;
         this.todayDate = new Date ();
+        this.differenceInDays;
     }
 
     insertDeadline(toDo){
@@ -53,9 +54,35 @@ class TodayDeadline extends Deadline {
 }
 
 class UpcomingDeadline extends Deadline {
-    //checks if the project's deadline is within the number of days passed as argument, 10 days are used for testing purposes
+    //checks if the project's deadline is within the number of days passed as argument, 10 <= days are used for testing purposes
     checkDeadline(deadLine) {
-        if (deadLine)
+        if (dateFns.compareAsc(deadLine, this.todayDate) == 1){
+            this.differenceInDays = dateFns.differenceInDays(deadLine, this.todayDate);
+            if ( this.differenceInDays > 0 && this.differenceInDays <= this.periodBefore){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+class SomedayDeadline extends Deadline {
+    //checks if the project's deadline is within the number of days passed as argument,  > 10 days are used for testing purposes
+    checkDeadline(deadLine) {
+        if (dateFns.compareAsc(deadLine, this.todayDate) == 1){
+            this.differenceInDays = dateFns.differenceInDays(deadLine, this.todayDate);
+            if ( this.differenceInDays > this.periodBefore){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+class AnytimeDeadline extends Deadline {
+    checkDeadline(deadLine) {
+       
+        return false;
     }
 }
 
