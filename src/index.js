@@ -1,5 +1,6 @@
 //contains application logic
 const dateFns = require ("date-fns");
+import "./styles.css";
 
 function createToDo (title, description, deadLine, priority, toDoId) {
     
@@ -7,7 +8,7 @@ function createToDo (title, description, deadLine, priority, toDoId) {
     let phases =  [];
 
     return { essentials, phases };
-}
+};
 
 const toDoUpdater = (function() {
     const insertPhase = function (toDo, phaseTitle) {
@@ -89,12 +90,13 @@ class AnytimeDeadline extends Deadline {
     }
 }
 
-
-module.exports = {
+export {
     createToDo,
     toDoUpdater,
     TodayDeadline,
     UpcomingDeadline,
     SomedayDeadline,
     AnytimeDeadline
-}
+};
+
+
