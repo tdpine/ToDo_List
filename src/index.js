@@ -15,12 +15,12 @@ const toDoUpdater = (function() {
         toDo.phases.push({ phaseTitle, phasesDetails : []});
     };
 
-    const insertPhDetail = function (toDo, detail, index) {
-        toDo.phases[index].phasesDetails.push({detail});
+    const insertPhDetail = function (toDo, detail, phaseIndex) {
+        toDo.phases[phaseIndex].phasesDetails.push({detail});
     }
 
-    const delPhase = function (toDo, index) {
-       toDo.phases.splice(index,1);
+    const delPhase = function (toDo, phaseIndex) {
+       toDo.phases.splice(phaseIndex,1);
     }
 
     const delPhDetail = function (toDo, phaseIndex, detailIndex) {

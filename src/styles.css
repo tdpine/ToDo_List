@@ -89,3 +89,11 @@ ul{
 ul > * {
     margin-bottom: 10px;
 }
+
+#projectsList{
+    display: flex;
+    flex-direction: column;
+}
+#projectsList ul li {
+    list-style: none;
+}
