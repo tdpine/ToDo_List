@@ -12,8 +12,13 @@ body {
     background-color: rgba(220, 220, 220, 0.72);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    border-right: solid thin rgba(220, 220, 220, 0.72);
 }
+.leftContainer ul{
+    padding-left: 10px;
+}
+
 .rightContainer{
     flex:0 auto;
 }
@@ -96,4 +101,35 @@ ul > * {
 }
 #projectsList ul li {
     list-style: none;
+}
+.leftFooter{
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    border-top: solid thin rgba(115, 111, 111, 0.268);
+    width: 100%;
+    justify-content: center;
+    
+}
+.leftFooter p::before{
+    content: url("./images/plus.svg");
+    display: inline-block;
+    margin-right: 5px;
+    width: 20px;
+    height: 20px;
+}
+.leftFooter p::after{
+    content: url("./images/tune-vertical.svg");
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+}
+.leftFooter p{
+    display: flex;
+    width: 100%;
+    height: 3rem;
+    align-items: center;
+    margin: 0;
+    padding-left: 10px;
 }

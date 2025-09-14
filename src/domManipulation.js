@@ -16,7 +16,11 @@ const project2 = createToDo("Titolo di prova", "Descrizione di prova","","Today"
 toDoUpdater.insertPhase(project2, "Fase 1 di prova");
 toDoUpdater.insertPhase(project2, "Fase 2 di prova");
 toDoUpdater.insertPhase(project2, "Fase 3 di prova");
-const toDoList = [project1, project2];
+const project3 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
+toDoUpdater.insertPhase(project3, "Fase 1 di prova");
+toDoUpdater.insertPhase(project3, "Fase 2 di prova");
+toDoUpdater.insertPhase(project3, "Fase 3 di prova");
+const toDoList = [project1, project2, project3];
 console.log(project1.phases);
 
 const projectsList = document.querySelector("#projectsList");
