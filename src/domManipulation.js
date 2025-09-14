@@ -24,6 +24,9 @@ const toDoList = [project1, project2, project3];
 console.log(project1.phases);
 
 const projectsList = document.querySelector("#projectsList");
+const newToDoBtn = document.querySelector("#newList");
+const newToDoDialog = document.querySelector("#newToDoDialog");
+const confirmBtn = newToDoDialog.querySelector("#confirmBtn");
 
 function displayToDoSumm(toDoList){
     for(let toDo of toDoList){
@@ -47,3 +50,11 @@ function createSumm(toDo){
 }
 displayToDoSumm(toDoList);
 
+newToDoBtn.addEventListener("click", () => {
+    newToDoDialog.showModal();
+})
+
+confirmBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  newToDoDialog.close();
+});

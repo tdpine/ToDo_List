@@ -28,7 +28,15 @@
             </div>
 
             <div class="leftFooter">
-                <p>New list</p>
+                <ul>
+                    <li id="newList">
+                        New list
+                    </li>
+                    <li id="settings">
+                        
+                    </li>
+                </ul>
+                
             </div>
         </div>
         <div class="rightContainer">
@@ -43,6 +51,25 @@
         </div>
            
     </div>
-    
+    <dialog id="newToDoDialog">
+        <form>
+            <p>
+                <label>
+                    Project title:
+                    <input type="text" id="toDoTitle">
+                </label>
+            </p>
+            <p>
+                <label>
+                    Description:
+                    <input type="text" id="toDoDescr">
+                </label>
+            </p>
+            <div>
+                <button value="cancel" formmethod="dialog">Cancel</button>
+                <button id="confirmBtn" value="default">Confirm</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>
