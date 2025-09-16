@@ -21,7 +21,7 @@ toDoUpdater.insertPhase(project3, "Fase 1 di prova");
 toDoUpdater.insertPhase(project3, "Fase 2 di prova");
 toDoUpdater.insertPhase(project3, "Fase 3 di prova");
 const toDoList = [project1, project2, project3];
-console.log(project1.phases);
+
 
 const projectsList = document.querySelector("#projectsList");
 const newToDoBtn = document.querySelector("#newList");
@@ -56,5 +56,15 @@ newToDoBtn.addEventListener("click", () => {
 
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
+  const toDoTitle = document.getElementById("toDoTitle");
+  const description = document.getElementById("description");
+  const deadline = document.getElementById("deadLine");
+  const newProject = createToDo(toDoTitle.value, description.value, deadline.value, "", crypto.randomUUID());
+  toDoUpdater.insertPhase(newProject, "Fase 1 di prova");
+  toDoUpdater.insertPhase(newProject, "Fase 2 di prova");
+  toDoUpdater.insertPhase(newProject, "Fase 3 di prova");
+  toDoList.push(newProject);
+  projectsList.appendChild(createSumm(newProject));
+  console.log(toDoList);
   newToDoDialog.close();
 });

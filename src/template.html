@@ -6,6 +6,7 @@
     <title>To-do list</title>
 </head>
 <body>
+    
     <div class="container">
         <div class="leftContainer">
             <ul id="dueDates">
@@ -37,6 +38,7 @@
                     </li>
                 </ul>
                 
+    
             </div>
         </div>
         <div class="rightContainer">
@@ -49,9 +51,8 @@
                 <button>button3</button>
             </div>
         </div>
-           
     </div>
-    <dialog id="newToDoDialog">
+     <dialog id="newToDoDialog" >
         <form>
             <p>
                 <label>
@@ -59,10 +60,16 @@
                     <input type="text" id="toDoTitle">
                 </label>
             </p>
-            <p>
+             <p>
                 <label>
                     Description:
-                    <input type="text" id="toDoDescr">
+                    <textarea id="description"></textarea>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Deadline:
+                    <input type="date" id="deadLine">
                 </label>
             </p>
             <div>
