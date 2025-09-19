@@ -61,25 +61,20 @@ function crtToDoFrmInp(){
   const deadline = document.getElementById("deadLine");
   const newProject = createToDo(toDoTitle.value, description.value, deadline.value, "", crypto.randomUUID());
   toDoList.push(newProject);
-  //righe per test
-  toDoUpdater.insertPhase(newProject, "Fase 1 di prova");
-  toDoUpdater.insertPhase(newProject, "Fase 2 di prova");
-  toDoUpdater.insertPhase(newProject, "Fase 3 di prova");
-  //righe per test
   return newProject;
 }
-
-//this function get attached when a project summary is clicked on the left sidebar
+//this function attaches a handler, to every new summary created, which handles the click
+// of a project summary on the left sidebar
 function clickSummHandler (ul){
     ul.addEventListener("click", () => {
-    //svuoto il div projectContainer
     projectContainer.innerHTML = '';
-    //come pesco ul corrispondente dall'array dei toDos?
-    //console.log(toDoUls.indexOf(ul));
+    //the order of the clicked ul on the left, coincides with the index of its corresponding toDo object in toDoList array
     const ulIndexToDisplay = toDoUls.indexOf(ul);
-    //funziona ma devo attaccare l'eventListener anche quando creo un nuovo toDo
-    //
-    //creo elemento per titolo,descrizione in un unico div. poi i vari div delle fasi con i dettagli
+    displayFullProject (ulIndexToDisplay);
+  });
+}
+// displays all project infos on the right content bar
+function displayFullProject (ulIndexToDisplay){
     const project = toDoList[ulIndexToDisplay];
     const title = document.createElement("h1");
     title.textContent = project.essentials.title;
@@ -87,14 +82,11 @@ function clickSummHandler (ul){
     description.textContent = project.essentials.description;
     projectContainer.appendChild(title);
     projectContainer.appendChild(description);
-
-  });
 }
-
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
-  //create new project object from usr input then create the ul element to append 
+  //create new project object from usr input then create the ul element to append on left side bar
   const newProject = crtToDoFrmInp();
   const newProjectUl = createSumm(newProject);
 
@@ -102,7 +94,7 @@ confirmBtn.addEventListener("click", (event) => {
   toDoUls.push(newProjectUl);
   clickSummHandler(newProjectUl);
   projectsList.appendChild(newProjectUl);
-
+  //
   newToDoDialog.close();
 });
 
