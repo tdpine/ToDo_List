@@ -1,4 +1,5 @@
 const appLogic = require('./index.js');
+
 import {
     createToDo,
     toDoUpdater,
@@ -12,14 +13,33 @@ const project1 = createToDo("Titolo di prova", "Descrizione di prova","","Today"
 toDoUpdater.insertPhase(project1, "Fase 1 di prova");
 toDoUpdater.insertPhase(project1, "Fase 2 di prova");
 toDoUpdater.insertPhase(project1, "Fase 3 di prova");
+
+toDoUpdater.insertPhDetail(project1, "bla bla bla", 0);
+toDoUpdater.insertPhDetail(project1, "bla2 bla2 bla2", 0);
+toDoUpdater.insertPhDetail(project1, "bla3 bla3 bla3", 0);
+
+toDoUpdater.insertPhDetail(project1, "bla bla bla", 1);
+toDoUpdater.insertPhDetail(project1, "bla2 bla2 bla2", 1);
+toDoUpdater.insertPhDetail(project1, "bla3 bla3 bla3", 1);
+
 const project2 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
 toDoUpdater.insertPhase(project2, "Fase 1 di prova");
 toDoUpdater.insertPhase(project2, "Fase 2 di prova");
 toDoUpdater.insertPhase(project2, "Fase 3 di prova");
+
+toDoUpdater.insertPhDetail(project2, "bla bla bla", 0);
+toDoUpdater.insertPhDetail(project2, "bla2 bla2 bla2", 0);
+toDoUpdater.insertPhDetail(project2, "bla3 bla3 bla3", 0);
+
 const project3 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
 toDoUpdater.insertPhase(project3, "Fase 1 di prova");
 toDoUpdater.insertPhase(project3, "Fase 2 di prova");
 toDoUpdater.insertPhase(project3, "Fase 3 di prova");
+
+toDoUpdater.insertPhDetail(project3, "bla bla bla", 0);
+toDoUpdater.insertPhDetail(project3, "bla2 bla2 bla2", 0);
+toDoUpdater.insertPhDetail(project3, "bla3 bla3 bla3", 0);
+
 const toDoList = [project1, project2, project3];
 
 
@@ -82,7 +102,30 @@ function displayFullProject (ulIndexToDisplay){
     description.textContent = project.essentials.description;
     projectContainer.appendChild(title);
     projectContainer.appendChild(description);
+
+    project.phases.forEach(phase => {
+        displayPhase(phase, projectContainer);
+    });
 }
+
+//creates phase title and phase details and appends it to projectContainer
+function displayPhase(phase, projectContainer){
+    
+        const phaseTitle =  document.createElement("h3");
+        phaseTitle.textContent = phase.phaseTitle;
+        const detailsList = document.createElement("ul");
+        phase.phasesDetails.forEach(detail => {
+            console.log(detail.detail);
+            const detailLi = document.createElement("li");
+            detailLi.textContent = detail.detail;
+            detailsList.appendChild(detailLi);
+        });
+        projectContainer.appendChild(phaseTitle);
+        projectContainer.appendChild(detailsList);
+    
+}
+//
+
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
 
@@ -99,7 +142,7 @@ confirmBtn.addEventListener("click", (event) => {
 });
 
 const toDoUls = [...document.querySelectorAll("#projectsList ul")];
-console.log(toDoUls);
+//console.log(toDoUls);
 toDoUls.forEach(ul => {
     clickSummHandler (ul)
 });
