@@ -1,5 +1,6 @@
 const appLogic = require('./index.js');
 
+
 import {
     createToDo,
     toDoUpdater,
@@ -9,7 +10,7 @@ import {
     AnytimeDeadline
 } from "./index.js"
 
-const project1 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
+/* const project1 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
 toDoUpdater.insertPhase(project1, "Fase 1 di prova");
 toDoUpdater.insertPhase(project1, "Fase 2 di prova");
 toDoUpdater.insertPhase(project1, "Fase 3 di prova");
@@ -40,8 +41,10 @@ toDoUpdater.insertPhDetail(project3, "bla bla bla", 0);
 toDoUpdater.insertPhDetail(project3, "bla2 bla2 bla2", 0);
 toDoUpdater.insertPhDetail(project3, "bla3 bla3 bla3", 0);
 
-const toDoList = [project1, project2, project3];
+const toDoList = [project1, project2, project3]; */
 
+//this will be populated by the data in localStorage, and used for the various DOM logics
+const toDoList = [];
 
 const projectsList = document.querySelector("#projectsList");
 const newToDoBtn = document.querySelector("#newList");
@@ -56,6 +59,7 @@ function displayToDoSumm(toDoList){
     }
 }
 
+//Creates summary of toDos that get appended on the left side bar
 function createSumm(toDo){
     let summary = document.createElement("ul");
     let toDotitle = document.createElement("li");
@@ -69,11 +73,7 @@ function createSumm(toDo){
     }
     return summary;
 }
-displayToDoSumm(toDoList);
 
-newToDoBtn.addEventListener("click", () => {
-    newToDoDialog.showModal();
-})
 //create toDo from user input
 function crtToDoFrmInp(){
   const toDoTitle = document.getElementById("toDoTitle");
@@ -83,8 +83,9 @@ function crtToDoFrmInp(){
   toDoList.push(newProject);
   return newProject;
 }
+
 //this function attaches a handler, to every new summary created, which handles the click
-// of a project summary on the left sidebar
+//of a project summary on the left sidebar
 function clickSummHandler (ul){
     ul.addEventListener("click", () => {
     projectContainer.innerHTML = '';
@@ -93,6 +94,7 @@ function clickSummHandler (ul){
     displayFullProject (ulIndexToDisplay);
   });
 }
+
 // displays all project infos on the right content bar
 function displayFullProject (ulIndexToDisplay){
     const project = toDoList[ulIndexToDisplay];
@@ -141,9 +143,54 @@ confirmBtn.addEventListener("click", (event) => {
   newToDoDialog.close();
 });
 
+newToDoBtn.addEventListener("click", () => {
+    newToDoDialog.showModal();
+})
+
+//all'avvio della webpage, controllo se ci sono toDos dentro localStorage
+//se c'e' almeno uno, popolo l'array toDoList, e poi chiamo la funzione displayToDoSumm, che li mostrera' nel left side bar
+
+function getDataFrmLclStorage() {
+    if(localStorage.length > 0){
+        const toDoNums = localStorage.length;
+        for(let i = 0; i < toDoNums; i++){
+            let currentItem = localStorage.getItem(i);
+            toDoList.push(JSON.parse(currentItem));
+        }
+    }
+}
+//to fine tune...
+function sendDataToLclStorage() {
+    const project1 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
+    toDoUpdater.insertPhase(project1, "Fase 1 di prova");
+    toDoUpdater.insertPhase(project1, "Fase 2 di prova");
+    toDoUpdater.insertPhase(project1, "Fase 3 di prova");
+
+
+
+    const project2 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
+    toDoUpdater.insertPhase(project2, "Fase 1 di prova");
+    toDoUpdater.insertPhase(project2, "Fase 2 di prova");
+    toDoUpdater.insertPhase(project2, "Fase 3 di prova");
+
+    
+     localStorage.setItem("0", JSON.stringify(project1));
+    console.log(localStorage.length);
+    localStorage.setItem("1", JSON.stringify(project2));
+    console.log(localStorage.length); 
+
+
+}
+sendDataToLclStorage();
+/* getDataFrmLclStorage();
+console.log(toDoList); */
+
+/* displayToDoSumm(toDoList);
+
 const toDoUls = [...document.querySelectorAll("#projectsList ul")];
 //console.log(toDoUls);
 toDoUls.forEach(ul => {
     clickSummHandler (ul)
 });
+ */
 
