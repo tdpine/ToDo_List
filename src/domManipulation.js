@@ -52,6 +52,7 @@ const newToDoDialog = document.querySelector("#newToDoDialog");
 const confirmBtn = newToDoDialog.querySelector("#confirmBtn");
 const projectContainer = document.querySelector(".projectContainer");
 
+//this function gets called every time the page gets loaded, to display summaries on left side bar
 function displayToDoSumm(toDoList){
     for(let toDo of toDoList){
         let summary = createSumm(toDo);
@@ -62,6 +63,7 @@ function displayToDoSumm(toDoList){
 //Creates summary of toDos that get appended on the left side bar
 function createSumm(toDo){
     let summary = document.createElement("ul");
+    summary.setAttribute("id", toDo.essentials.toDoId);
     let toDotitle = document.createElement("li");
     toDotitle.textContent = toDo.essentials.title;
     summary.appendChild(toDotitle);
@@ -80,7 +82,7 @@ function crtToDoFrmInp(){
   const description = document.getElementById("description");
   const deadline = document.getElementById("deadLine");
   const newProject = createToDo(toDoTitle.value, description.value, deadline.value, "", crypto.randomUUID());
-  toDoList.push(newProject);
+  sendDataToLclStorage(newProject, newProject.essentials.toDoId );
   return newProject;
 }
 
@@ -89,15 +91,16 @@ function crtToDoFrmInp(){
 function clickSummHandler (ul){
     ul.addEventListener("click", () => {
     projectContainer.innerHTML = '';
-    //the order of the clicked ul on the left, coincides with the index of its corresponding toDo object in toDoList array
-    const ulIndexToDisplay = toDoUls.indexOf(ul);
-    displayFullProject (ulIndexToDisplay);
+    //the id will be used to get corresponding data from localStorage
+    const toDoIdDisplay = ul.getAttribute("id");
+    displayFullProject (toDoIdDisplay);
   });
 }
 
 // displays all project infos on the right content bar
-function displayFullProject (ulIndexToDisplay){
-    const project = toDoList[ulIndexToDisplay];
+function displayFullProject (toDoIdDisplay){
+    const project = JSON.parse(localStorage.getItem(toDoIdDisplay));
+    console.log(toDoIdDisplay);
     const title = document.createElement("h1");
     title.textContent = project.essentials.title;
     const description = document.createElement("p");
@@ -135,11 +138,13 @@ confirmBtn.addEventListener("click", (event) => {
   const newProject = crtToDoFrmInp();
   const newProjectUl = createSumm(newProject);
 
-  //this is needed to display the right project on the content section
+  //display the project on the content section
   toDoUls.push(newProjectUl);
   clickSummHandler(newProjectUl);
   projectsList.appendChild(newProjectUl);
-  //
+  
+  sendDataToLclStorage(newProject, localStorage.length)
+
   newToDoDialog.close();
 });
 
@@ -151,46 +156,34 @@ newToDoBtn.addEventListener("click", () => {
 //se c'e' almeno uno, popolo l'array toDoList, e poi chiamo la funzione displayToDoSumm, che li mostrera' nel left side bar
 
 function getDataFrmLclStorage() {
-    if(localStorage.length > 0){
+    /* if(localStorage.length > 0){
         const toDoNums = localStorage.length;
         for(let i = 0; i < toDoNums; i++){
             let currentItem = localStorage.getItem(i);
             toDoList.push(JSON.parse(currentItem));
         }
-    }
+    } */
+
+    const allKeys = Object.keys(localStorage);
+    const items = allKeys.reduce((obj, key) => {
+        obj = localStorage.getItem(key);
+        toDoList.push(JSON.parse(obj));
+        return obj;
+    }, {});
 }
 //to fine tune...
-function sendDataToLclStorage() {
-    const project1 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
-    toDoUpdater.insertPhase(project1, "Fase 1 di prova");
-    toDoUpdater.insertPhase(project1, "Fase 2 di prova");
-    toDoUpdater.insertPhase(project1, "Fase 3 di prova");
-
-
-
-    const project2 = createToDo("Titolo di prova", "Descrizione di prova","","Today",crypto.randomUUID());
-    toDoUpdater.insertPhase(project2, "Fase 1 di prova");
-    toDoUpdater.insertPhase(project2, "Fase 2 di prova");
-    toDoUpdater.insertPhase(project2, "Fase 3 di prova");
-
+function sendDataToLclStorage(toDo, toDoId) {
     
-     localStorage.setItem("0", JSON.stringify(project1));
-    console.log(localStorage.length);
-    localStorage.setItem("1", JSON.stringify(project2));
-    console.log(localStorage.length); 
-
-
+    localStorage.setItem(`${index}`, JSON.stringify(toDo));
+    
 }
-sendDataToLclStorage();
-/* getDataFrmLclStorage();
-console.log(toDoList); */
 
-/* displayToDoSumm(toDoList);
-
+getDataFrmLclStorage();
+displayToDoSumm(toDoList);
 const toDoUls = [...document.querySelectorAll("#projectsList ul")];
-//console.log(toDoUls);
+console.log(toDoUls);
 toDoUls.forEach(ul => {
     clickSummHandler (ul)
 });
- */
+
 
